@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+// import axios from ""
+import React, { useState } from "react";
 function App() {
+  const [token, setToken] = useState("");
+  const handleClick = async () => {
+    try {
+      const data = await fetch("http://localhost:8080/");
+      let json = await data.json();
+      console.log("data >> ", json.data);
+      setToken(json.data.token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleBayar = () => {
+    window.snap.pay(token);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ marginTop: "20%" }}>
+      {token && <p>{token}</p>}
+      <button onClick={handleClick}>Click</button>
+      <button onClick={handleBayar}>bayar</button>
     </div>
   );
 }
