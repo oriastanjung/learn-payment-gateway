@@ -27,7 +27,7 @@ let parameter = {
 
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/create-token", (req, res) => {
   snap.createTransaction(parameter).then((transaction) => {
     // transaction token
     let transactionToken = transaction.token;
@@ -35,6 +35,10 @@ app.get("/", (req, res) => {
     console.log("transactionToken:", transaction);
   });
   //   res.send("hello world");
+});
+
+app.get("/", (req, res) => {
+  res.send("hello world!!!");
 });
 
 app.listen(PORT, () =>
